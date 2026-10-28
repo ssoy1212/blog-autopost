@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>개인정보처리방침 · Quiet Journals Autopost</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>개인정보처리방침</h1>
+  <p class="sub">Quiet Journals Autopost · 시행일 2026년 10월 28일</p>
+
+  <h2>1. 적용 대상</h2>
+  <p>이 방침은 블로그 「내향인의 기록」 운영자가 개인적으로 사용하는 글 게시 도구
+  "Quiet Journals Autopost"(이하 "도구")에 적용됩니다. 도구의 사용자는 운영자 한 사람뿐입니다.</p>
+
+  <h2>2. 접근하는 Google 사용자 데이터</h2>
+  <p>도구는 운영자 본인의 Google 계정에 대해 Blogger 권한
+  (<code>https://www.googleapis.com/auth/blogger</code>)만 요청합니다.
+  다른 Google 서비스(Gmail, Drive, 연락처 등)의 데이터에는 접근하지 않으며,
+  운영자 외 다른 사람의 Google 계정 데이터에도 접근하지 않습니다.</p>
+
+  <h2>3. 데이터 사용 방법</h2>
+  <ul>
+    <li>Blogger 권한은 운영자 본인의 블로그에 글 초안을 작성하는 용도로만 사용합니다.</li>
+    <li>글 초안을 만들기 위해 주제와 키워드를 Anthropic Claude API로 보냅니다.
+    이때 Google 계정 정보나 Blogger에서 읽은 데이터는 보내지 않습니다.</li>
+    <li>Google 사용자 데이터를 광고, 판매, 프로파일링, AI 모델 학습에 사용하지 않습니다.</li>
+  </ul>
+
+  <h2>4. 저장 및 보관</h2>
+  <p>도구는 Google 사용자 데이터를 별도의 데이터베이스에 저장하지 않습니다.
+  인증에 필요한 토큰은 운영자가 관리하는 GitHub 저장소의 암호화된 Secrets에만 보관되며,
+  공개되지 않습니다.</p>
+
+  <h2>5. 공유</h2>
+  <p>Google 사용자 데이터를 제3자와 공유하거나 판매하지 않습니다.</p>
+
+  <h2>6. 권한 철회</h2>
+  <p>운영자는 언제든지 Google 계정의
+  <a href="https://myaccount.google.com/permissions">서드파티 앱 및 서비스</a>
+  설정에서 도구의 접근 권한을 철회할 수 있습니다.</p>
+
+  <h2>7. Google API 서비스 사용자 데이터 정책 준수</h2>
+  <p>도구가 Google API에서 받은 정보를 사용하는 방식은
+  <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API 서비스 사용자 데이터 정책</a>의
+  제한적 사용(Limited Use) 요구사항을 포함하여 해당 정책을 준수합니다.</p>
+
+  <h2>8. 문의 및 변경</h2>
+  <p>문의는 이 도구의 GitHub 저장소 Issues 탭을 이용해 주세요.
+  이 방침이 변경되면 이 페이지에 갱신된 내용과 시행일을 게시합니다.</p>
+
+  <hr>
+  <div lang="en">
+  <h2>Privacy Policy (English)</h2>
+  <p>Quiet Journals Autopost is a personal tool used only by the owner of the blog "Quiet Journals".
+  It requests only the Blogger scope (<code>https://www.googleapis.com/auth/blogger</code>) for the owner's own
+  Google account and uses it solely to create draft posts on the owner's own blog. It does not access other
+  Google services or any other user's data. Topics and keywords are sent to the Anthropic Claude API to draft
+  posts; no Google account data is sent. Google user data is not stored in any database, sold, shared with
+  third parties, or used for advertising or AI model training. OAuth tokens are kept only in encrypted GitHub
+  Secrets controlled by the owner. Access can be revoked at any time at
+  <a href="https://myaccount.google.com/permissions">Google Account permissions</a>.
+  The tool's use of information received from Google APIs adheres to the
+  <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+  including the Limited Use requirements. Contact: the Issues tab of this tool's GitHub repository.</p>
+  </div>
+
+  <footer>
+    <a href="index.html">홈 / Home</a>
+    <a href="terms.html">서비스 약관 / Terms</a>
+  </footer>
+</main>
+</body>
+</html>

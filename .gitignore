@@ -1,0 +1,9 @@
+client_secret.json
+token*.json
+.env
+preview.html
+__pycache__/
+data.md
+.DS_Store
+.idea/
+SETUP.local.md

@@ -1,0 +1,12 @@
+:root { --bg:#fafaf8; --fg:#2b2b2b; --muted:#6b6b6b; --line:#e4e2dc; --link:#3d5a80; color-scheme: light; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#1c1c1e; --fg:#e8e6e1; --muted:#a3a19c; --line:#3a3a3c; --link:#9ec1e8; color-scheme: dark; }
+}
+body { margin:0; background:var(--bg); color:var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; line-height:1.7; }
+main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+h1 { font-size:1.6rem; margin:0 0 4px; } h2 { font-size:1.15rem; margin-top:2em; }
+.sub { color:var(--muted); margin:0 0 2em; }
+a { color:var(--link); } ul { padding-left:1.2em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
+footer a { margin-right:1em; }
