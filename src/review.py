@@ -27,6 +27,14 @@ REVIEW_SYSTEM = """너는 블로그 「내향인의 기록」의 작가이고, �
 {{"title": "60자 이내 제목 (가게 이름과 동네 포함)", "labels": ["라벨1", "라벨2", "라벨3"], "html": "<p>...</p>"}}"""
 
 
+PHOTO_SLOT_NOTE = """사진은 운영자가 나중에 직접 넣는다. 사진이 들어갈 자리 4~5곳에 아래 표시를 넣어라.
+- 정보 박스 바로 뒤 첫 자리: 대표 사진 (외관이나 가장 인상적인 장면)
+- 분위기·공간 섹션: 1~2자리 (내부, 좌석)
+- 메뉴·맛 섹션: 주문한 메뉴마다 1자리
+형식: <div class="qj-photo-slot"><p>📷 사진 자리 · 매장 외관</p></div>  (· 뒤에 어떤 사진인지 짧게)
+대표 사진 자리는 본문 맨 앞, 도입 문단보다 먼저 둔다."""
+
+
 def parse_info(path: Path) -> dict:
     data, key = {}, None
     for raw in path.read_text(encoding="utf-8").splitlines():
@@ -63,7 +71,7 @@ def generate_review(info: dict, n_images: int) -> dict:
         img_note = (f"본문의 적절한 위치에 [[IMG1]]부터 [[IMG{n_images}]]까지 이미지 자리표시자를 "
                     "각각 정확히 한 번씩, 단독 <p> 태그 안에 넣어라. 사진 순서는 방문 흐름 순서다.")
     else:
-        img_note = "이미지 자리표시자는 넣지 마라."
+        img_note = PHOTO_SLOT_NOTE
     post = call_claude(REVIEW_SYSTEM.format(kind=kind), f"[방문 메모]\n{memo}\n\n{img_note}")
     post["html"] = info_box(info) + post["html"]
     if kind not in post["labels"]:
