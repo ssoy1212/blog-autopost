@@ -6,6 +6,7 @@ from pathlib import Path
 from generate import call_claude
 
 INFO_KEYS = ["위치", "가는 길", "영업시간", "웨이팅", "좌석", "좌석·콘센트·와이파이", "주문한 메뉴", "주차", "한줄평"]
+INFO_LABELS = {"한줄평": "분위기"}  # 정보 박스에 보일 이름
 
 REVIEW_SYSTEM = """너는 블로그 「내향인의 기록」의 작가이고, 운영자가 직접 다녀온 {kind} 방문 메모를 블로그 후기로 정리한다.
 - 운영자 본인의 1인칭 경험담. 차분하고 정돈된 글. 본문은 공백 포함 1500~2500자.
@@ -58,7 +59,7 @@ def info_box(info: dict) -> str:
     for k in INFO_KEYS:
         if k in info:
             v = htmllib.escape(info[k]).replace("\n", "<br>")
-            rows.append(f"<tr><th>{k}</th><td>{v}</td></tr>")
+            rows.append(f"<tr><th>{INFO_LABELS.get(k, k)}</th><td>{v}</td></tr>")
     name = htmllib.escape(info.get("이름", ""))
     label = f"{kind} 정보" + (f" · {name}" if name else "")
     table = f'<table class="qj-table">{"".join(rows)}</table>' if rows else ""
