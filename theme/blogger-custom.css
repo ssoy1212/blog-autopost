@@ -1,0 +1,133 @@
+/* ===== 내향인의 기록 · 본문 스타일 =====
+   Blogger → 테마 → 맞춤설정 → 고급 → "CSS 추가"에 통째로 붙여넣기 */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+body {
+  background: #f7f5f0 !important;
+}
+
+.post-body {
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 17px;
+  line-height: 1.85;
+  color: #34322e;
+  word-break: keep-all;
+  letter-spacing: -0.01em;
+}
+
+.post-title, h3.post-title, .post-title a {
+  font-family: 'Noto Serif KR', serif !important;
+  font-weight: 700 !important;
+  color: #23221f !important;
+  letter-spacing: -0.02em;
+  line-height: 1.4 !important;
+}
+
+.post-body p { margin: 0 0 1.3em; }
+
+.post-body h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.45em;
+  font-weight: 700;
+  color: #23221f;
+  margin: 2.4em 0 0.9em;
+  padding-bottom: 0.45em;
+  border-bottom: 1px solid #e3ded4;
+  line-height: 1.45;
+}
+.post-body h3 {
+  font-size: 1.12em;
+  font-weight: 700;
+  color: #4d6b5c;
+  margin: 1.8em 0 0.6em;
+}
+.post-body strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 62%, #e4ecdf 62%);
+}
+
+.post-body ul, .post-body ol { margin: 0 0 1.4em; padding-left: 1.3em; }
+.post-body li { margin: 0.35em 0; }
+.post-body li::marker { color: #6f8f7e; }
+
+.post-body blockquote {
+  margin: 1.8em 0;
+  padding: 1.1em 1.4em;
+  border-left: 3px solid #6f8f7e;
+  background: #fbfaf7;
+  color: #4a4842;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.02em;
+}
+
+.post-body img { border-radius: 10px; }
+
+/* 핵심 요약 */
+.post-body .qj-summary {
+  margin: 0 0 2.2em;
+  padding: 1.3em 1.5em 0.6em;
+  background: #eef2ec;
+  border-radius: 12px;
+}
+.post-body .qj-summary .qj-label {
+  margin: 0 0 0.5em;
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #4d6b5c;
+}
+.post-body .qj-summary ul { margin-bottom: 0.8em; }
+
+/* 팁 박스 */
+.post-body .qj-tip {
+  margin: 1.6em 0;
+  padding: 1em 1.3em;
+  border: 1px solid #e6dcc6;
+  background: #fbf7ee;
+  border-radius: 10px;
+  font-size: 0.95em;
+}
+.post-body .qj-tip p { margin: 0; }
+.post-body .qj-tip strong { background: none; color: #9a7a3c; margin-right: 0.4em; }
+
+/* 비교 표 */
+.post-body .qj-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.4em 0 1.8em;
+  font-size: 0.93em;
+  line-height: 1.6;
+}
+.post-body .qj-table th {
+  background: #eef2ec;
+  color: #2f3f37;
+  font-weight: 700;
+  text-align: left;
+}
+.post-body .qj-table th, .post-body .qj-table td {
+  padding: 0.7em 0.9em;
+  border-bottom: 1px solid #e3ded4;
+  vertical-align: top;
+}
+
+/* 마무리 체크리스트 */
+.post-body .qj-checklist {
+  margin: 2em 0 0;
+  padding: 1.3em 1.5em 0.5em;
+  border: 1px solid #d5dfd0;
+  border-radius: 12px;
+}
+.post-body .qj-checklist .qj-label {
+  margin: 0 0 0.4em;
+  font-weight: 700;
+  color: #4d6b5c;
+}
+.post-body .qj-checklist ul { list-style: none; padding-left: 0; }
+.post-body .qj-checklist li::before { content: "✓"; color: #6f8f7e; font-weight: 700; margin-right: 0.6em; }
+
+@media (max-width: 640px) {
+  .post-body { font-size: 16px; }
+  .post-body h2 { font-size: 1.3em; }
+  .post-body .qj-table { font-size: 0.86em; }
+}
