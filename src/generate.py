@@ -41,11 +41,15 @@ def generate_post(topic: str, keywords: str, n_images: int) -> dict:
 
     user = f"주제: {topic}\n핵심 키워드: {keywords}\n{img_note}"
 
+    return call_claude(SYSTEM, user)
+
+
+def call_claude(system: str, user: str) -> dict:
     client = anthropic.Anthropic()  # ANTHROPIC_API_KEY 환경변수 사용
     msg = client.messages.create(
         model=MODEL,
         max_tokens=6000,
-        system=SYSTEM,
+        system=system,
         messages=[{"role": "user", "content": user}],
     )
     text = "".join(b.text for b in msg.content if b.type == "text").strip()

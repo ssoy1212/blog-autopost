@@ -45,23 +45,43 @@ def insert_images(body: str, urls: list[str], alt: str) -> str:
     return re.sub(r"\[\[IMG\d+\]\]", "", body)  # 남은 자리표시자 제거
 
 
-def main():
+def next_job():
+    """방문기(posts/) 중 아직 안 올린 것을 먼저, 없으면 topics.csv의 다음 주제."""
+    posts = ROOT / "posts"
+    if posts.is_dir():
+        for d in sorted(x for x in posts.iterdir() if x.is_dir()):
+            if (d / "info.md").exists() and not (d / "status.txt").exists():
+                return {"kind": "review", "dir": d, "pid": d.name}
     fields, rows = load_topics()
     row = next((r for r in rows if not (r.get("status") or "").strip()), None)
-    if row is None:
-        print("남은 주제가 없습니다. topics.csv에 주제를 추가하세요.")
+    if row:
+        return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"].strip()}
+    return None
+
+
+def main():
+    job = next_job()
+    if job is None:
+        print("남은 글감이 없습니다. posts/에 방문기를 넣거나 topics.csv에 주제를 추가하세요.")
         return
+    pid = job["pid"]
 
-    pid = row["id"].strip()
-    image_dir = (row.get("image_dir") or "").strip()
-    images = (
-        process_images(ROOT / "images" / image_dir, ROOT / "public" / pid)
-        if image_dir
-        else []
-    )
-    print(f"[{pid}] {row['topic']} / 이미지 {len(images)}장")
-
-    post = generate_post(row["topic"], row.get("keywords", ""), len(images))
+    if job["kind"] == "review":
+        from review import generate_review, parse_info
+        info = parse_info(job["dir"] / "info.md")
+        images = process_images(job["dir"], ROOT / "public" / pid)
+        print(f"[방문기 {pid}] {info.get('이름', '')} / 이미지 {len(images)}장")
+        post = generate_review(info, len(images))
+    else:
+        row = job["row"]
+        image_dir = (row.get("image_dir") or "").strip()
+        images = (
+            process_images(ROOT / "images" / image_dir, ROOT / "public" / pid)
+            if image_dir
+            else []
+        )
+        print(f"[{pid}] {row['topic']} / 이미지 {len(images)}장")
+        post = generate_post(row["topic"], row.get("keywords", ""), len(images))
 
     if DRY_RUN:
         urls = [str(p.relative_to(ROOT)) for p in images]
@@ -87,10 +107,17 @@ def main():
     result = insert_post(post["title"], body, post["labels"], draft=DRAFT)
     print(f"업로드 완료 ({'초안' if DRAFT else '발행'}): {result.get('title')} / id={result.get('id')}")
 
-    row["status"] = f"{'draft' if DRAFT else 'published'}:{result.get('id')}"
-    save_topics(fields, rows)
+    status = f"{'draft' if DRAFT else 'published'}:{result.get('id')}"
+    if job["kind"] == "review":
+        done_file = job["dir"] / "status.txt"
+        done_file.write_text(status + "\n", encoding="utf-8")
+        changed = str(done_file.relative_to(ROOT))
+    else:
+        job["row"]["status"] = status
+        save_topics(job["fields"], job["rows"])
+        changed = "topics.csv"
     if REPO:
-        git("add", "topics.csv")
+        git("add", changed)
         git("commit", "-m", f"done {pid}")
         git("push")
 
