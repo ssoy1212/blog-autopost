@@ -8,3 +8,5 @@ data.md
 .idea/
 SETUP.local.md
 .venv/
+*.dmg
+Claude outputs/
