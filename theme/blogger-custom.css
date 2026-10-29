@@ -151,3 +151,19 @@ body {
   height: auto;
   border-radius: 10px;
 }
+
+/* 방문기 정보 박스 표 */
+.post-body .qj-summary .qj-table { margin: 0.3em 0 0.9em; }
+.post-body .qj-summary .qj-table th {
+  width: 6.5em;
+  white-space: nowrap;
+  background: none;
+  padding-left: 0;
+  color: #4d6b5c;
+}
+.post-body .qj-summary .qj-table tr:last-child th,
+.post-body .qj-summary .qj-table tr:last-child td { border-bottom: none; }
+@media (max-width: 640px) {
+  .post-body .qj-summary { padding: 1.1em 1.1em 0.4em; }
+  .post-body .qj-summary .qj-table th { width: 5.2em; }
+}
