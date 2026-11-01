@@ -124,7 +124,7 @@ body {
   color: #4d6b5c;
 }
 .post-body .qj-checklist ul { list-style: none; padding-left: 0; }
-.post-body .qj-checklist li::before { content: "✓"; color: #6f8f7e; font-weight: 700; margin-right: 0.6em; }
+.post-body .qj-checklist li::before { content: "\2713"; color: #6f8f7e; font-weight: 700; margin-right: 0.6em; }
 
 @media (max-width: 640px) {
   .post-body { font-size: 16px; }
