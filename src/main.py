@@ -6,11 +6,12 @@ import re
 import subprocess
 from pathlib import Path
 
-from generate import generate_post
+from generate import generate_post, suggest_topic
 from images import process_images
 
 ROOT = Path(__file__).resolve().parent.parent
 TOPICS = ROOT / "topics.csv"
+CATEGORIES = ROOT / "categories.csv"
 REPO = os.environ.get("GITHUB_REPOSITORY")  # Actions에서 자동으로 "owner/repo"가 들어옴
 DRY_RUN = os.environ.get("DRY_RUN") == "1"  # 1이면 업로드 없이 preview.html만 생성
 DRAFT = os.environ.get("PUBLISH_MODE", "draft") != "publish"
@@ -35,6 +36,39 @@ def save_topics(fields, rows):
         writer.writerows(rows)
 
 
+def pick_category(rows):
+    """categories.csv의 weight만큼 순서표를 펼쳐 놓고, 자동 생성한 글 수만큼 돌려가며 고른다."""
+    if not CATEGORIES.exists():
+        return None
+    with CATEGORIES.open(encoding="utf-8", newline="") as f:
+        cats = [c for c in csv.DictReader(f) if (c.get("category") or "").strip()]
+    schedule = []
+    for c in cats:
+        schedule += [c] * max(1, int((c.get("weight") or "1").strip() or 1))
+    if not schedule:
+        return None
+    auto_count = sum(1 for r in rows if (r.get("category") or "").strip())
+    return schedule[auto_count % len(schedule)]
+
+
+def auto_topic(fields, rows):
+    """처리할 주제가 없을 때 카테고리를 골라 Claude가 새 주제를 정해 topics.csv 행으로 만든다."""
+    cat = pick_category(rows)
+    if cat is None:
+        return None
+    existing = [r["topic"] for r in rows if r.get("topic")]
+    sug = suggest_topic(cat["category"].strip(), (cat.get("description") or "").strip(), existing)
+    if "category" not in fields:
+        fields = [*fields, "category"]
+    nums = [int(r["id"]) for r in rows if (r.get("id") or "").strip().isdigit()]
+    row = {k: "" for k in fields}
+    row.update(id=f"{max(nums, default=0) + 1:03d}", topic=sug["topic"],
+               keywords=sug["keywords"], category=cat["category"].strip())
+    rows.append(row)
+    print(f"[자동 주제] ({row['category']}) {row['topic']}")
+    return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"]}
+
+
 def insert_images(body: str, urls: list[str], alt: str) -> str:
     for i, url in enumerate(urls, 1):
         tag = (
@@ -56,13 +90,13 @@ def next_job():
     row = next((r for r in rows if not (r.get("status") or "").strip()), None)
     if row:
         return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"].strip()}
-    return None
+    return auto_topic(fields, rows)
 
 
 def main():
     job = next_job()
     if job is None:
-        print("남은 글감이 없습니다. posts/에 방문기를 넣거나 topics.csv에 주제를 추가하세요.")
+        print("남은 글감이 없고 categories.csv도 없습니다. posts/에 방문기를 넣거나 topics.csv·categories.csv를 채우세요.")
         return
     pid = job["pid"]
 

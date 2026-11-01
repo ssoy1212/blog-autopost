@@ -61,3 +61,30 @@ def call_claude(system: str, user: str) -> dict:
         if key not in data:
             raise ValueError(f"응답에 '{key}' 필드가 없습니다: {text[:200]}")
     return data
+
+
+TOPIC_SYSTEM = """너는 블로그 「내향인의 기록」의 기획자다. 차분하고 정돈된 정보 위주의 블로그이며, 독자는 한국 성인이다.
+주어진 카테고리 안에서 새 글 주제 1개를 정한다.
+- 이미 쓴 주제와 겹치거나 지나치게 비슷하면 안 된다.
+- 검색으로 찾아볼 만한 구체적인 주제여야 한다 (너무 포괄적이거나 막연한 주제 금지).
+- 최신 뉴스, 가격, 통계에 의존하는 주제는 피한다.
+- 반드시 아래 형식의 JSON 객체 하나만 출력한다. 앞뒤 설명이나 코드펜스 금지.
+{"topic": "글 주제 (40자 이내)", "keywords": "핵심 키워드 3개를 쉼표로 구분"}"""
+
+
+def suggest_topic(category: str, description: str, existing: list[str]) -> dict:
+    done = "\n".join(f"- {t}" for t in existing) or "(없음)"
+    user = f"카테고리: {category}\n설명: {description}\n\n이미 쓴 주제:\n{done}"
+    client = anthropic.Anthropic()
+    msg = client.messages.create(
+        model=MODEL,
+        max_tokens=500,
+        system=TOPIC_SYSTEM,
+        messages=[{"role": "user", "content": user}],
+    )
+    text = "".join(b.text for b in msg.content if b.type == "text").strip()
+    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text).strip()
+    data = json.loads(text)
+    if not data.get("topic"):
+        raise ValueError(f"응답에 'topic'이 없습니다: {text[:200]}")
+    return {"topic": data["topic"].strip(), "keywords": (data.get("keywords") or "").strip()}
