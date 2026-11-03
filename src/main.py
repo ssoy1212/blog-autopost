@@ -4,6 +4,8 @@ import html as htmllib
 import os
 import re
 import subprocess
+import urllib.request
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from generate import generate_post, suggest_topic
@@ -12,6 +14,7 @@ from images import process_images
 ROOT = Path(__file__).resolve().parent.parent
 TOPICS = ROOT / "topics.csv"
 CATEGORIES = ROOT / "categories.csv"
+FEEDS = ROOT / "feeds.txt"
 REPO = os.environ.get("GITHUB_REPOSITORY")  # Actions에서 자동으로 "owner/repo"가 들어옴
 DRY_RUN = os.environ.get("DRY_RUN") == "1"  # 1이면 업로드 없이 preview.html만 생성
 DRAFT = os.environ.get("PUBLISH_MODE", "draft") != "publish"
@@ -51,13 +54,38 @@ def pick_category(rows):
     return schedule[auto_count % len(schedule)]
 
 
+def recent_titles(per_feed: int = 8, limit: int = 40) -> list[str]:
+    """feeds.txt의 RSS/Atom 주소에서 최근 글 제목을 읽는다. 실패한 피드는 건너뛴다."""
+    if not FEEDS.exists():
+        return []
+    titles = []
+    for line in FEEDS.read_text(encoding="utf-8").splitlines():
+        url = line.strip()
+        if not url or url.startswith("#") or not url.startswith(("http://", "https://")):
+            continue
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "blog-autopost/1.0"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                root = ET.fromstring(resp.read(2_000_000))
+            found = [(el.findtext("title") or "").strip() for el in root.iter("item")]
+            if not found:  # Atom
+                found = [(el.findtext("{http://www.w3.org/2005/Atom}title") or "").strip()
+                         for el in root.iter("{http://www.w3.org/2005/Atom}entry")]
+            titles += [t[:80] for t in found if t][:per_feed]
+        except Exception as e:
+            print(f"[피드 건너뜀] {url}: {e}")
+    return titles[:limit]
+
+
 def auto_topic(fields, rows):
     """처리할 주제가 없을 때 카테고리를 골라 Claude가 새 주제를 정해 topics.csv 행으로 만든다."""
     cat = pick_category(rows)
     if cat is None:
         return None
     existing = [r["topic"] for r in rows if r.get("topic")]
-    sug = suggest_topic(cat["category"].strip(), (cat.get("description") or "").strip(), existing)
+    recent = recent_titles()
+    print(f"[참고 피드] 최근 글 제목 {len(recent)}개")
+    sug = suggest_topic(cat["category"].strip(), (cat.get("description") or "").strip(), existing, recent)
     if "category" not in fields:
         fields = [*fields, "category"]
     nums = [int(r["id"]) for r in rows if (r.get("id") or "").strip().isdigit()]
