@@ -45,22 +45,28 @@ def generate_post(topic: str, keywords: str, n_images: int) -> dict:
     return call_claude(SYSTEM, user)
 
 
-def call_claude(system: str, user: str) -> dict:
+def call_claude(system: str, user: str, attempts: int = 3) -> dict:
     client = anthropic.Anthropic()  # ANTHROPIC_API_KEY 환경변수 사용
-    msg = client.messages.create(
-        model=MODEL,
-        max_tokens=6000,
-        system=system,
-        messages=[{"role": "user", "content": user}],
-    )
-    text = "".join(b.text for b in msg.content if b.type == "text").strip()
-    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text).strip()
-
-    data = json.loads(text)
-    for key in ("title", "labels", "html"):
-        if key not in data:
-            raise ValueError(f"응답에 '{key}' 필드가 없습니다: {text[:200]}")
-    return data
+    last = None
+    for i in range(1, attempts + 1):
+        msg = client.messages.create(
+            model=MODEL,
+            max_tokens=12000,
+            system=system,
+            messages=[{"role": "user", "content": user}],
+        )
+        text = "".join(b.text for b in msg.content if b.type == "text").strip()
+        text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text).strip()
+        try:
+            data = json.loads(text)
+            for key in ("title", "labels", "html"):
+                if key not in data:
+                    raise ValueError(f"응답에 '{key}' 필드가 없습니다: {text[:200]}")
+            return data
+        except (json.JSONDecodeError, ValueError) as e:
+            last = e
+            print(f"[재시도 {i}/{attempts}] 응답 해석 실패 (stop_reason={msg.stop_reason}): {e}")
+    raise last
 
 
 TOPIC_SYSTEM = """너는 블로그 「내향인의 기록」의 기획자다. 차분하고 정돈된 정보 위주의 블로그이며, 독자는 한국 성인이다.
