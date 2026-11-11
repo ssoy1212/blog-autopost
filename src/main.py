@@ -54,47 +54,74 @@ def pick_category(rows):
     return schedule[auto_count % len(schedule)]
 
 
-def recent_titles(per_feed: int = 8, limit: int = 40) -> list[str]:
-    """feeds.txt의 RSS/Atom 주소에서 최근 글 제목을 읽는다. 실패한 피드는 건너뛴다."""
+TAG_RE = re.compile(r"<[^>]+>")
+ATOM = "{http://www.w3.org/2005/Atom}"
+CONTENT_ENCODED = "{http://purl.org/rss/1.0/modules/content/}encoded"
+
+
+def _clean(text, limit: int) -> str:
+    text = TAG_RE.sub(" ", htmllib.unescape(text or ""))
+    return re.sub(r"\s+", " ", text).strip()[:limit]
+
+
+def fetch_articles(per_feed: int = 8, limit: int = 40) -> list[dict]:
+    """feeds.txt의 RSS/Atom 주소에서 최근 기사의 제목·링크·요약을 읽는다. 실패한 피드는 건너뛴다."""
     if not FEEDS.exists():
         return []
-    titles = []
+    articles = []
     for line in FEEDS.read_text(encoding="utf-8").splitlines():
         url = line.strip()
         if not url or url.startswith("#") or not url.startswith(("http://", "https://")):
             continue
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "blog-autopost/1.0"})
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                root = ET.fromstring(resp.read(2_000_000))
-            found = [(el.findtext("title") or "").strip() for el in root.iter("item")]
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                root = ET.fromstring(resp.read(3_000_000))
+            found = [
+                {
+                    "title": _clean(el.findtext("title"), 150),
+                    "url": (el.findtext("link") or "").strip(),
+                    "summary": _clean(el.findtext("description") or el.findtext(CONTENT_ENCODED), 1200),
+                }
+                for el in root.iter("item")
+            ]
             if not found:  # Atom
-                found = [(el.findtext("{http://www.w3.org/2005/Atom}title") or "").strip()
-                         for el in root.iter("{http://www.w3.org/2005/Atom}entry")]
-            titles += [t[:80] for t in found if t][:per_feed]
+                for el in root.iter(ATOM + "entry"):
+                    link = el.find(ATOM + "link")
+                    found.append({
+                        "title": _clean(el.findtext(ATOM + "title"), 150),
+                        "url": (link.get("href") if link is not None else "") or "",
+                        "summary": _clean(el.findtext(ATOM + "summary") or el.findtext(ATOM + "content"), 1200),
+                    })
+            articles += [a for a in found if a["title"] and a["url"].startswith(("http://", "https://"))][:per_feed]
         except Exception as e:
             print(f"[피드 건너뜀] {url}: {e}")
-    return titles[:limit]
+    return articles[:limit]
 
 
 def auto_topic(fields, rows):
-    """처리할 주제가 없을 때 카테고리를 골라 Claude가 새 주제를 정해 topics.csv 행으로 만든다."""
+    """처리할 주제가 없을 때 피드의 새 기사 중 하나를 Claude가 골라 topics.csv 행으로 만든다."""
     cat = pick_category(rows)
     if cat is None:
         return None
     existing = [r["topic"] for r in rows if r.get("topic")]
-    recent = recent_titles()
-    print(f"[참고 피드] 최근 글 제목 {len(recent)}개")
-    sug = suggest_topic(cat["category"].strip(), (cat.get("description") or "").strip(), existing, recent)
-    if "category" not in fields:
-        fields = [*fields, "category"]
+    used = {(r.get("source_url") or "").strip() for r in rows}
+    articles = [a for a in fetch_articles() if a["url"] not in used]
+    print(f"[참고 기사] 아직 쓰지 않은 기사 {len(articles)}개")
+    if not articles:
+        raise RuntimeError("참고할 새 기사를 피드에서 가져오지 못했습니다. feeds.txt 주소를 확인하세요.")
+    sug = suggest_topic(cat["category"].strip(), (cat.get("description") or "").strip(), existing, articles)
+    art = articles[sug["index"]]
+    for col in ("category", "source_url"):
+        if col not in fields:
+            fields = [*fields, col]
     nums = [int(r["id"]) for r in rows if (r.get("id") or "").strip().isdigit()]
     row = {k: "" for k in fields}
-    row.update(id=f"{max(nums, default=0) + 1:03d}", topic=sug["topic"],
-               keywords=sug["keywords"], category=cat["category"].strip())
+    row.update(id=f"{max(nums, default=0) + 1:03d}", topic=sug["topic"], keywords=sug["keywords"],
+               category=cat["category"].strip(), source_url=art["url"])
     rows.append(row)
-    print(f"[자동 주제] ({row['category']}) {row['topic']}")
-    return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"]}
+    print(f"[자동 주제] ({row['category']}) {row['topic']} <- {art['url']}")
+    return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"], "source": art}
 
 
 def insert_images(body: str, urls: list[str], alt: str) -> str:
@@ -143,7 +170,7 @@ def main():
             else []
         )
         print(f"[{pid}] {row['topic']} / 이미지 {len(images)}장")
-        post = generate_post(row["topic"], row.get("keywords", ""), len(images))
+        post = generate_post(row["topic"], row.get("keywords", ""), len(images), job.get("source"))
 
     if DRY_RUN:
         urls = [str(p.relative_to(ROOT)) for p in images]
