@@ -10,6 +10,7 @@ from pathlib import Path
 
 from generate import generate_post, suggest_topic
 from images import process_images
+from photos import fetch_photos
 
 ROOT = Path(__file__).resolve().parent.parent
 TOPICS = ROOT / "topics.csv"
@@ -121,15 +122,19 @@ def auto_topic(fields, rows):
                category=cat["category"].strip(), source_url=art["url"])
     rows.append(row)
     print(f"[자동 주제] ({row['category']}) {row['topic']} <- {art['url']}")
-    return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"], "source": art}
+    source = {**art, "image_query": sug.get("image_query", "")}
+    return {"kind": "topic", "fields": fields, "rows": rows, "row": row, "pid": row["id"], "source": source}
 
 
-def insert_images(body: str, urls: list[str], alt: str) -> str:
+def insert_images(body: str, urls: list[str], alt: str, captions: list[str] | None = None) -> str:
+    captions = captions or []
     for i, url in enumerate(urls, 1):
         tag = (
             f'<img src="{url}" alt="{htmllib.escape(alt)} {i}" loading="lazy" '
             'style="max-width:100%;height:auto;">'
         )
+        if i <= len(captions) and captions[i - 1]:
+            tag += f'<br><small style="color:#6b7a70;">{captions[i - 1]}</small>'
         body = body.replace(f"[[IMG{i}]]", tag)
     return re.sub(r"\[\[IMG\d+\]\]", "", body)  # 남은 자리표시자 제거
 
@@ -159,23 +164,26 @@ def main():
         from review import generate_review, parse_info
         info = parse_info(job["dir"] / "info.md")
         images = process_images(job["dir"], ROOT / "public" / pid)
+        captions = []
         print(f"[방문기 {pid}] {info.get('이름', '')} / 이미지 {len(images)}장")
         post = generate_review(info, len(images))
     else:
         row = job["row"]
         image_dir = (row.get("image_dir") or "").strip()
-        images = (
-            process_images(ROOT / "images" / image_dir, ROOT / "public" / pid)
-            if image_dir
-            else []
-        )
+        captions = []
+        if image_dir:
+            images = process_images(ROOT / "images" / image_dir, ROOT / "public" / pid)
+        else:  # 천문 소식 글: NASA 사진 → 없으면 개념도
+            found = fetch_photos(row["topic"], job.get("source"), ROOT / "public" / pid)
+            images = [p for p, _ in found]
+            captions = [c for _, c in found]
         print(f"[{pid}] {row['topic']} / 이미지 {len(images)}장")
         post = generate_post(row["topic"], row.get("keywords", ""), len(images), job.get("source"))
 
     if DRY_RUN:
         urls = [str(p.relative_to(ROOT)) for p in images]
         preview = f"<h1>{htmllib.escape(post['title'])}</h1>\n"
-        preview += insert_images(post["html"], urls, post["title"])
+        preview += insert_images(post["html"], urls, post["title"], captions)
         (ROOT / "preview.html").write_text(preview, encoding="utf-8")
         print("DRY_RUN: preview.html 생성 완료 (업로드 안 함)")
         return
@@ -192,7 +200,7 @@ def main():
         sha = git("rev-parse", "HEAD")  # 커밋 SHA로 고정해 CDN 캐시 문제 회피
         urls = [f"https://cdn.jsdelivr.net/gh/{REPO}@{sha}/public/{pid}/{p.name}" for p in images]
 
-    body = insert_images(post["html"], urls, post["title"])
+    body = insert_images(post["html"], urls, post["title"], captions)
     result = insert_post(post["title"], body, post["labels"], draft=DRAFT)
     print(f"업로드 완료 ({'초안' if DRAFT else '발행'}): {result.get('title')} / id={result.get('id')}")
 
