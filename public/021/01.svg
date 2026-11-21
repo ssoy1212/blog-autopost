@@ -1,0 +1,40 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans KR, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a9a8e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="450" fill="#f7f4ec"/>
+
+  <text x="400" y="45" font-size="24" font-weight="700" fill="#3b4a40" text-anchor="middle">두 별의 바람이 블랙홀의 먹이를 만든다?</text>
+
+  <!-- 1: 두 별 -->
+  <text x="190" y="140" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">① 거대한 두 별</text>
+  <circle cx="110" cy="215" r="40" fill="none" stroke="#8a9a8e" stroke-width="2" stroke-dasharray="4 5"/>
+  <circle cx="270" cy="215" r="40" fill="none" stroke="#8a9a8e" stroke-width="2" stroke-dasharray="4 5"/>
+  <circle cx="110" cy="215" r="22" fill="#7d9a82"/>
+  <circle cx="270" cy="215" r="22" fill="#7d9a82"/>
+
+  <!-- 2: 바람 충돌 -->
+  <line x1="145" y1="215" x2="172" y2="215" stroke="#8a9a8e" stroke-width="3" marker-end="url(#arr)"/>
+  <line x1="235" y1="215" x2="208" y2="215" stroke="#8a9a8e" stroke-width="3" marker-end="url(#arr)"/>
+  <ellipse cx="190" cy="215" rx="12" ry="32" fill="#c9b79c" stroke="#7d9a82" stroke-width="3"/>
+  <text x="190" y="305" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">② 별바람이 충돌</text>
+
+  <!-- 3: 가스 덩어리 -->
+  <line x1="215" y1="215" x2="585" y2="215" stroke="#8a9a8e" stroke-width="3" stroke-dasharray="8 7" marker-end="url(#arr)"/>
+  <circle cx="290" cy="208" r="6" fill="#c9b79c"/>
+  <circle cx="365" cy="222" r="9" fill="#c9b79c"/>
+  <circle cx="440" cy="208" r="7" fill="#c9b79c"/>
+  <circle cx="510" cy="220" r="11" fill="#c9b79c"/>
+  <text x="400" y="305" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">③ 밀도 높은 가스 덩어리</text>
+
+  <!-- 4: 블랙홀 -->
+  <ellipse cx="660" cy="215" rx="58" ry="17" fill="none" stroke="#c9b79c" stroke-width="4"/>
+  <circle cx="660" cy="215" r="30" fill="#3b4a40"/>
+  <text x="640" y="140" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">우리 은하 중심</text>
+  <text x="640" y="305" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">④ 블랙홀로 흘러들어</text>
+  <text x="640" y="330" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">먹이가 될 가능성</text>
+
+  <text x="400" y="410" font-size="16" fill="#3b4a40" text-anchor="middle">개념도 · 크기와 거리는 실제 비율이 아닙니다</text>
+</svg>
