@@ -1,0 +1,39 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans KR, sans-serif">
+  <rect width="800" height="450" fill="#f7f4ec"/>
+  <text x="400" y="42" font-size="24" font-weight="bold" fill="#3b4a40" text-anchor="middle">별이 별을 삼키면 일어나는 일</text>
+
+  <rect x="30" y="70" width="230" height="300" rx="14" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+  <rect x="285" y="70" width="230" height="300" rx="14" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+  <rect x="540" y="70" width="230" height="300" rx="14" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+
+  <text x="145" y="100" font-size="17" font-weight="bold" fill="#3b4a40" text-anchor="middle">1. 나선을 그리며 접근</text>
+  <text x="400" y="100" font-size="17" font-weight="bold" fill="#3b4a40" text-anchor="middle">2. 충돌과 폭발</text>
+  <text x="655" y="100" font-size="17" font-weight="bold" fill="#3b4a40" text-anchor="middle">3. 47일 뒤 웹 망원경 관측</text>
+
+  <path d="M 240 215 A 95 95 0 0 0 145 120 A 80 80 0 0 0 65 215 A 65 65 0 0 0 145 280 A 55 55 0 0 0 198 230" fill="none" stroke="#8a9a8e" stroke-width="2.5" stroke-dasharray="7 6"/>
+  <circle cx="145" cy="215" r="50" fill="#c9b79c" stroke="#8a9a8e" stroke-width="2"/>
+  <text x="145" y="221" font-size="17" fill="#3b4a40" text-anchor="middle">거성</text>
+  <circle cx="240" cy="215" r="9" fill="#7d9a82"/>
+  <text x="222" y="250" font-size="16" fill="#3b4a40" text-anchor="middle">작은 별</text>
+
+  <polygon points="472,215 436,236 436,277 400,257 364,277 364,236 328,215 364,194 364,153 400,173 436,153 436,194" fill="#c9b79c" stroke="#7d9a82" stroke-width="3"/>
+  <circle cx="400" cy="215" r="26" fill="#7d9a82"/>
+
+  <circle cx="655" cy="215" r="78" fill="none" stroke="#8a9a8e" stroke-width="2" stroke-dasharray="6 6"/>
+  <circle cx="655" cy="215" r="54" fill="none" stroke="#c9b79c" stroke-width="3" stroke-dasharray="6 6"/>
+  <circle cx="655" cy="215" r="26" fill="#7d9a82"/>
+
+  <text x="145" y="328" font-size="16" fill="#3b4a40" text-anchor="middle">작은 별이 거성 쪽으로</text>
+  <text x="145" y="350" font-size="16" fill="#3b4a40" text-anchor="middle">끌려 들어감</text>
+  <text x="400" y="328" font-size="16" fill="#3b4a40" text-anchor="middle">두 별이 만나며</text>
+  <text x="400" y="350" font-size="16" fill="#3b4a40" text-anchor="middle">격렬한 폭발 발생</text>
+  <text x="655" y="328" font-size="16" fill="#3b4a40" text-anchor="middle">폭발 직후의 모습을</text>
+  <text x="655" y="350" font-size="16" fill="#3b4a40" text-anchor="middle">제임스 웹이 포착</text>
+
+  <line x1="264" y1="215" x2="276" y2="215" stroke="#7d9a82" stroke-width="3"/>
+  <polygon points="283,215 274,209 274,221" fill="#7d9a82"/>
+  <line x1="519" y1="215" x2="531" y2="215" stroke="#7d9a82" stroke-width="3"/>
+  <polygon points="538,215 529,209 529,221" fill="#7d9a82"/>
+
+  <text x="400" y="413" font-size="17" fill="#3b4a40" text-anchor="middle">무대: 안드로메다은하 · 거성은 태양보다 약 18,000배 밝음</text>
+</svg>
