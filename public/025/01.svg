@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f7f4ec"/>
+  <text x="400" y="40" font-family="Noto Sans KR, sans-serif" font-size="24" font-weight="700" fill="#3b4a40" text-anchor="middle">DART가 낸 구멍, 헤라가 처음 가까이서 봤다</text>
+
+  <rect x="20" y="64" width="230" height="346" rx="14" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+  <rect x="285" y="64" width="230" height="346" rx="14" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+  <rect x="550" y="64" width="230" height="346" rx="14" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+
+  <line x1="253" y1="240" x2="274" y2="240" stroke="#8a9a8e" stroke-width="3"/>
+  <polygon points="282,240 272,234 272,246" fill="#8a9a8e"/>
+  <line x1="518" y1="240" x2="539" y2="240" stroke="#8a9a8e" stroke-width="3"/>
+  <polygon points="547,240 537,234 537,246" fill="#8a9a8e"/>
+
+  <text x="135" y="98" font-family="Noto Sans KR, sans-serif" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">① 충돌</text>
+  <circle cx="90" cy="250" r="60" fill="none" stroke="#8a9a8e" stroke-width="2" stroke-dasharray="6 6"/>
+  <circle cx="90" cy="250" r="34" fill="#c9b79c"/>
+  <text x="90" y="256" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">디디모스</text>
+  <circle cx="132" cy="208" r="11" fill="#7d9a82"/>
+  <text x="158" y="212" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40">디모르포스</text>
+  <text x="205" y="128" font-family="Noto Sans KR, sans-serif" font-size="16" font-weight="700" fill="#3b4a40" text-anchor="middle">DART</text>
+  <rect x="193" y="136" width="24" height="12" rx="2" fill="#3b4a40"/>
+  <line x1="198" y1="150" x2="146" y2="196" stroke="#3b4a40" stroke-width="3"/>
+  <polygon points="140,201 147,189 154,197" fill="#3b4a40"/>
+  <text x="135" y="360" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">DART 탐사선이 작은</text>
+  <text x="135" y="384" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">소행성에 충돌</text>
+
+  <text x="400" y="98" font-family="Noto Sans KR, sans-serif" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">② 구멍</text>
+  <circle cx="400" cy="230" r="70" fill="#c9b79c"/>
+  <ellipse cx="432" cy="205" rx="24" ry="18" fill="#8a9a8e" stroke="#3b4a40" stroke-width="2"/>
+  <line x1="448" y1="196" x2="492" y2="160" stroke="#7d9a82" stroke-width="3"/>
+  <line x1="454" y1="206" x2="500" y2="198" stroke="#7d9a82" stroke-width="3"/>
+  <line x1="450" y1="216" x2="490" y2="238" stroke="#7d9a82" stroke-width="3"/>
+  <line x1="395" y1="150" x2="424" y2="188" stroke="#3b4a40" stroke-width="2"/>
+  <text x="390" y="144" font-family="Noto Sans KR, sans-serif" font-size="16" font-weight="700" fill="#3b4a40" text-anchor="middle">구멍(분화구)</text>
+  <text x="400" y="324" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">디모르포스</text>
+  <text x="400" y="360" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">충돌 자리에 경기장 크기의</text>
+  <text x="400" y="384" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">구멍이 남음</text>
+
+  <text x="665" y="98" font-family="Noto Sans KR, sans-serif" font-size="18" font-weight="700" fill="#3b4a40" text-anchor="middle">③ 근접 관측</text>
+  <text x="620" y="140" font-family="Noto Sans KR, sans-serif" font-size="16" font-weight="700" fill="#3b4a40" text-anchor="middle">헤라 탐사선</text>
+  <rect x="558" y="163" width="26" height="14" fill="#7d9a82"/>
+  <rect x="616" y="163" width="26" height="14" fill="#7d9a82"/>
+  <rect x="586" y="160" width="28" height="20" rx="3" fill="#3b4a40"/>
+  <circle cx="700" cy="265" r="45" fill="#c9b79c"/>
+  <ellipse cx="718" cy="250" rx="16" ry="12" fill="#8a9a8e" stroke="#3b4a40" stroke-width="2"/>
+  <line x1="616" y1="174" x2="706" y2="240" stroke="#7d9a82" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="616" y1="182" x2="724" y2="262" stroke="#7d9a82" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="700" y="332" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">디모르포스</text>
+  <text x="665" y="360" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">헤라가 충돌 자리를</text>
+  <text x="665" y="384" font-family="Noto Sans KR, sans-serif" font-size="16" fill="#3b4a40" text-anchor="middle">처음 가까이서 관측</text>
+</svg>
