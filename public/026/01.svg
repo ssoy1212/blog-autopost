@@ -1,0 +1,54 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans KR, sans-serif">
+  <rect width="800" height="450" fill="#f7f4ec"/>
+
+  <text x="400" y="46" font-size="24" font-weight="bold" text-anchor="middle" fill="#3b4a40">유클리드가 찾은 첫 번째 새 혜성</text>
+
+  <line x1="355" y1="75" x2="355" y2="400" stroke="#8a9a8e" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <!-- 왼쪽: 원래 임무 -->
+  <text x="40" y="98" font-size="20" font-weight="bold" fill="#7d9a82">원래 임무</text>
+  <text x="40" y="124" font-size="16" fill="#3b4a40">먼 은하로 암흑 우주 탐구</text>
+
+  <g stroke="#8a9a8e" stroke-width="1.5" stroke-dasharray="5 5" fill="none">
+    <line x1="140" y1="290" x2="200" y2="190"/>
+    <line x1="145" y1="290" x2="285" y2="165"/>
+    <line x1="150" y1="298" x2="300" y2="240"/>
+  </g>
+  <g fill="#c9b79c" stroke="#8a9a8e" stroke-width="1.5">
+    <ellipse cx="205" cy="178" rx="26" ry="11" transform="rotate(-20 205 178)"/>
+    <ellipse cx="290" cy="155" rx="24" ry="10" transform="rotate(15 290 155)"/>
+    <ellipse cx="310" cy="235" rx="22" ry="9" transform="rotate(-10 310 235)"/>
+  </g>
+
+  <rect x="80" y="288" width="60" height="36" rx="4" fill="#7d9a82" stroke="#3b4a40" stroke-width="1.5"/>
+  <rect x="62" y="300" width="18" height="12" fill="#c9b79c" stroke="#8a9a8e" stroke-width="1.5"/>
+  <rect x="140" y="300" width="18" height="12" fill="#c9b79c" stroke="#8a9a8e" stroke-width="1.5"/>
+  <text x="110" y="358" font-size="16" text-anchor="middle" fill="#3b4a40">유클리드 우주망원경</text>
+
+  <!-- 오른쪽: 뜻밖의 발견 -->
+  <text x="385" y="98" font-size="20" font-weight="bold" fill="#7d9a82">뜻밖의 발견</text>
+  <text x="385" y="124" font-size="16" fill="#3b4a40">수천 년 걸리는 긴 궤도의 혜성</text>
+
+  <!-- 혜성 궤도 -->
+  <ellipse cx="600" cy="250" rx="150" ry="50" fill="none" stroke="#8a9a8e" stroke-width="2"/>
+
+  <!-- 지구 궤도, 태양, 지구 -->
+  <circle cx="459" cy="250" r="30" fill="none" stroke="#8a9a8e" stroke-width="1.2"/>
+  <circle cx="459" cy="250" r="12" fill="#c9b79c" stroke="#3b4a40" stroke-width="1.5"/>
+  <circle cx="459" cy="280" r="6" fill="#7d9a82" stroke="#3b4a40" stroke-width="1.2"/>
+  <text x="459" y="208" font-size="16" text-anchor="middle" fill="#3b4a40">태양</text>
+  <text x="459" y="312" font-size="16" text-anchor="middle" fill="#3b4a40">지구</text>
+
+  <!-- 지구-혜성 거리 -->
+  <line x1="463" y1="278" x2="672" y2="209" stroke="#3b4a40" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+  <!-- 혜성 -->
+  <path d="M675 207 L735 194 L735 204 Z" fill="#c9b79c" stroke="#8a9a8e" stroke-width="1"/>
+  <circle cx="675" cy="207" r="9" fill="#7d9a82" stroke="#3b4a40" stroke-width="1.5"/>
+  <text x="680" y="178" font-size="16" font-weight="bold" text-anchor="middle" fill="#3b4a40">새 혜성</text>
+
+  <text x="600" y="338" font-size="16" text-anchor="middle" fill="#3b4a40">한 바퀴 도는 데 수천 년</text>
+  <text x="385" y="385" font-size="16" fill="#3b4a40">점선: 지구~혜성 거리 약 13억 km</text>
+
+  <text x="400" y="428" font-size="16" text-anchor="middle" fill="#8a9a8e">개념도이며 거리·크기는 축척과 다릅니다</text>
+</svg>
