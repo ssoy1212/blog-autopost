@@ -1,0 +1,38 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans KR, sans-serif">
+  <rect width="800" height="450" fill="#f7f4ec"/>
+  <text x="400" y="36" font-size="22" font-weight="bold" fill="#3b4a40" text-anchor="middle">포이베: 별보다 먼저 태어났을지 모르는 블랙홀</text>
+
+  <line x1="60" y1="90" x2="730" y2="90" stroke="#8a9a8e" stroke-width="3"/>
+  <polygon points="742,90 726,82 726,98" fill="#8a9a8e"/>
+  <text x="740" y="68" font-size="16" fill="#3b4a40" text-anchor="end">시간</text>
+
+  <circle cx="110" cy="90" r="12" fill="#c9b79c"/>
+  <text x="110" y="125" font-size="16" fill="#3b4a40" text-anchor="middle">빅뱅</text>
+
+  <circle cx="400" cy="90" r="12" fill="#3b4a40"/>
+  <text x="400" y="125" font-size="16" fill="#3b4a40" text-anchor="middle">빅뱅 직후</text>
+  <text x="400" y="147" font-size="16" fill="#7d9a82" text-anchor="middle">원시 블랙홀 후보</text>
+
+  <circle cx="650" cy="90" r="12" fill="#7d9a82"/>
+  <text x="650" y="125" font-size="16" fill="#3b4a40" text-anchor="middle">첫 별</text>
+
+  <text x="400" y="190" font-size="18" font-weight="bold" fill="#3b4a40" text-anchor="middle">어떻게 찾았나: 중력 렌즈로 먼 별이 잠깐 밝아짐</text>
+
+  <path d="M126 292 Q430 215 690 292" fill="none" stroke="#7d9a82" stroke-width="3"/>
+  <path d="M126 308 Q430 385 690 308" fill="none" stroke="#7d9a82" stroke-width="3"/>
+
+  <circle cx="110" cy="300" r="16" fill="#c9b79c"/>
+  <text x="110" y="352" font-size="16" fill="#3b4a40" text-anchor="middle">먼 배경 별</text>
+
+  <circle cx="430" cy="300" r="9" fill="#3b4a40"/>
+  <text x="430" y="282" font-size="16" font-weight="bold" fill="#3b4a40" text-anchor="middle">포이베</text>
+  <text x="430" y="324" font-size="16" fill="#3b4a40" text-anchor="middle">중력으로 빛을 휘게 함</text>
+
+  <circle cx="705" cy="300" r="14" fill="#7d9a82"/>
+  <text x="700" y="352" font-size="16" fill="#3b4a40" text-anchor="middle">지구의 관측자</text>
+
+  <text x="430" y="228" font-size="16" fill="#3b4a40" text-anchor="middle">빛이 모여 잠깐 밝아 보임</text>
+
+  <rect x="110" y="385" width="580" height="44" rx="10" fill="none" stroke="#7d9a82" stroke-width="2"/>
+  <text x="400" y="414" font-size="18" fill="#3b4a40" text-anchor="middle">달 질량의 약 3배로 추정 → 암흑물질의 단서일 수 있음</text>
+</svg>
